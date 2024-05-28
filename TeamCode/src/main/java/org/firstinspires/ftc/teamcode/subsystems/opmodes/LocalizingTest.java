@@ -32,7 +32,7 @@ public class LocalizingTest extends LinearOpMode {
             drive.updateLocalizer();
             double yaw=drive.getIMUYaw();
             telemetry.addData("Yaw", yaw);
-            drive.driveFieldCentric(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, yaw);
+            drive.setWeightedPowers(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x);
             Pose2d position=drive.localizer.getPose();
             telemetry.addLine(position.toString());
             telemetry.addLine(drive.getVelocity().toString());

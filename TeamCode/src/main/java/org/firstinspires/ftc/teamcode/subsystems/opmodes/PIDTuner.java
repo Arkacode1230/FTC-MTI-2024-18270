@@ -29,7 +29,7 @@ public class PIDTuner extends LinearOpMode {
         GamepadEx detectorGamepad=new GamepadEx(gamepad1);
         FtcDashboard dashboard= FtcDashboard.getInstance();
         waitForStart();
-        drive.setPositionEstimate(new Pose2d(11.83, 62.16, Rotation2d.fromDegrees(270.00)));
+        drive.setPositionEstimate(new Pose2d(0, 0, Rotation2d.fromDegrees(0)));
         while (opModeIsActive()){
             hubs.forEach(LynxModule::clearBulkCache);
             drive.updateLocalizer();

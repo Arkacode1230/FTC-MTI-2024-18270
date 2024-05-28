@@ -27,17 +27,17 @@ public class MecanumDrivetrain {
     MotorEx rightBack;
     IMU imu;
     double headingOffset=0;
-    SimpleMotorFeedforward forwardFeedforward=new SimpleMotorFeedforward(0.05, 0.85);
-    SimpleMotorFeedforward strafeFeedforward=new SimpleMotorFeedforward(0.16, 1.1);
-    SimpleMotorFeedforward headingFeedforward=new SimpleMotorFeedforward(0.04, 1);
+    SimpleMotorFeedforward forwardFeedforward=new SimpleMotorFeedforward(0.085, 1);
+    SimpleMotorFeedforward strafeFeedforward=new SimpleMotorFeedforward(0.22, 1);
+    SimpleMotorFeedforward headingFeedforward=new SimpleMotorFeedforward(0.115, 1);
 
-    PIDFController translationalControllerY=new PIDFController(0.1, 0, 0.005, 0);
+    PIDFController translationalControllerY=new PIDFController(0.1, 0, 0.008, 0);
     PIDFController translationalControllerX=new PIDFController(
             translationalControllerY.getP(),
             translationalControllerY.getI(),
             translationalControllerY.getD(),
             translationalControllerY.getF());
-    PIDFController headingController=new PIDFController(1, 0.001, 0.005, 0);
+    PIDFController headingController=new PIDFController(1, 0, 0, 0);
 
 
     public static double TRACKWIDTH = 10.585861;
@@ -157,10 +157,17 @@ public class MecanumDrivetrain {
         telemetry.addData("velocity y", y_velo);
         telemetry.addData("velocity heading", heading_velo);
 
-        if (atTarget()){
-            setWeightedPowers(0, 0, 0);
-            return;
+        if (translationalControllerY.atSetPoint()){
+            y_velo=0;
         }
+        if (translationalControllerX.atSetPoint()){
+            x_velo=0;
+        }
+        if (headingController.atSetPoint()){
+            heading_velo=0;
+        }
+
+
         driveFieldCentric(x_velo, y_velo,heading_velo, heading);
     }
     public boolean atTarget(){

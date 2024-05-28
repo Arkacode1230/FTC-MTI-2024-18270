@@ -43,15 +43,16 @@ public class BlueAutoTestDoiPluZero extends LinearOpMode {
                 drive.setTarget(new WayPoint(new Pose2d(30, 12, Rotation2d.fromDegrees(180)), 1));
             }
             if (detectorGamepad.wasJustPressed(GamepadKeys.Button.Y)){
-                drive.setTarget(new WayPoint(new Pose2d(-12.5, 12, Rotation2d.fromDegrees(180)), 1));
+                drive.setTarget(new WayPoint(new Pose2d(-12.5, 12, Rotation2d.fromDegrees(180)), 0.5));
             }
             drive.updatePIDS();
             telemetry.addData("At target", drive.atTarget());
             telemetry.addData("heading", drive.localizer.getPose().getHeading());
-            telemetry.update();
             detectorGamepad.readButtons();
             TelemetryPacket packet = new TelemetryPacket();
             Pose2d position=drive.localizer.getPose();
+            telemetry.addData("position", position);
+            telemetry.update();
 
             packet.fieldOverlay().setFill("blue")
                     .strokeCircle(position.getX(), position.getY(), 9)
