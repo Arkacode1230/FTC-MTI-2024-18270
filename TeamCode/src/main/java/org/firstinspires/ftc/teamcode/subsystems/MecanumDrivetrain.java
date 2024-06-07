@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.arcrobotics.ftclib.controller.wpilibcontroller.SimpleMotorFeedforward;
 import com.arcrobotics.ftclib.geometry.Pose2d;
@@ -25,8 +27,6 @@ public class MecanumDrivetrain {
     MotorEx leftBack;
     MotorEx rightFront;
     MotorEx rightBack;
-    IMU imu;
-    double headingOffset=0;
     SimpleMotorFeedforward forwardFeedforward=new SimpleMotorFeedforward(0.085, 1);
     SimpleMotorFeedforward strafeFeedforward=new SimpleMotorFeedforward(0.22, 1);
     SimpleMotorFeedforward headingFeedforward=new SimpleMotorFeedforward(0.115, 1);
@@ -40,51 +40,22 @@ public class MecanumDrivetrain {
     PIDFController headingController=new PIDFController(1, 0, 0, 0);
 
 
-    public static double TRACKWIDTH = 10.585861;
-    public static double TICKS_TO_INCHES = 0.0005354682622109949;
-    public static double CENTER_WHEEL_OFFSET = -7.076;
-    public HolonomicOdometry localizer;
+    public GyroLocalizer localizer;
     Telemetry telemetry;
+    FtcDashboard dashboard;
 
-    public void init(HardwareMap hwMap, Telemetry telemetry){
+    public void init(HardwareMap hwMap, Telemetry telemetry, FtcDashboard dashboard){
         this.telemetry=telemetry;
+        this.dashboard=dashboard;
         leftFront=new MotorEx(hwMap, "frontleft");
         leftBack=new MotorEx(hwMap, "backleft");
         rightFront=new MotorEx(hwMap, "frontright");
         rightBack=new MotorEx(hwMap, "backright");
-        leftFront.setInverted(true);
-        leftBack.setInverted(true);
 
-        imu = hwMap.get(IMU.class, "imu");
-        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.DOWN,
-                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
-        // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
-        imu.initialize(parameters);
-        imu.resetYaw();
-        leftFront.setDistancePerPulse(TICKS_TO_INCHES);//right parallel pod
-        rightBack.setDistancePerPulse(-TICKS_TO_INCHES);//left parallel pod
-        rightFront.setDistancePerPulse(-TICKS_TO_INCHES);//perp pod
-
-        leftFront.resetEncoder();
-        rightBack.resetEncoder();
-        rightFront.resetEncoder();
-
-        localizer = new HolonomicOdometry(
-                rightBack::getDistance,
-                leftFront::getDistance,
-                rightFront::getDistance,
-                TRACKWIDTH, CENTER_WHEEL_OFFSET
-        );
-        setPositionEstimate(new Pose2d(0, 0, Rotation2d.fromDegrees(0)));
-    }
-    public double getIMUYaw(){
-        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS)+headingOffset;
-    }
-    public void setIMU(double angle){
-        headingOffset=headingOffset+angle-getIMUYaw();
+        localizer = new GyroLocalizer(hwMap);
     }
     public void setPositionEstimate(Pose2d position){
+
         localizer.updatePose(position);
     }
     public void setRawPowers(double frontleft, double frontright, double backleft, double backright){
@@ -98,8 +69,8 @@ public class MecanumDrivetrain {
             backright=backright/maximum;
 
         }
-        leftFront.set(frontleft);
-        leftBack.set(backleft);
+        leftFront.set(-frontleft);
+        leftBack.set(-backleft);
         rightFront.set(frontright);
         rightBack.set(backright);
     }
@@ -132,7 +103,18 @@ public class MecanumDrivetrain {
     }
     public void updateLocalizer() {
         localizer.updatePose();
+        Pose2d position=localizer.getPose();
+        telemetry.addLine(position.toString());
+        TelemetryPacket packet = new TelemetryPacket();
 
+
+        packet.fieldOverlay().setFill("blue")
+                .strokeCircle(position.getX(), position.getY(), 9)
+                .strokeLine(position.getX(), position.getY(),
+                        (position.getRotation().getCos()*10)+ position.getX(),
+                        (position.getRotation().getSin()*10)+ position.getY());
+
+        dashboard.sendTelemetryPacket(packet);
     }
     public List<Double> getVelocity(){
         List<Double> returning=Arrays.asList(rightBack.getVelocity(),

@@ -22,28 +22,29 @@ public class BlueAutoTestDoiPluZero extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        drive.init(hardwareMap, telemetry);
         List<LynxModule> hubs = hardwareMap.getAll(LynxModule.class);
         hubs.forEach(hub -> hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL));
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         GamepadEx detectorGamepad=new GamepadEx(gamepad1);
         FtcDashboard dashboard= FtcDashboard.getInstance();
+        drive.init(hardwareMap, telemetry, dashboard);
         waitForStart();
         drive.setPositionEstimate(new Pose2d(11.83, 62.16, Rotation2d.fromDegrees(270.00)));
+        drive.setTarget(new WayPoint(new Pose2d(24,42,Rotation2d.fromDegrees(270)), 1));
         while (opModeIsActive()){
             hubs.forEach(LynxModule::clearBulkCache);
             drive.updateLocalizer();
             if (detectorGamepad.wasJustPressed(GamepadKeys.Button.A)){
-                drive.setTarget(new WayPoint(new Pose2d(25,42,Rotation2d.fromDegrees(270)), 1));
+                drive.setTarget(new WayPoint(new Pose2d(24,42,Rotation2d.fromDegrees(270)), 0.5));
             }
             if (detectorGamepad.wasJustPressed(GamepadKeys.Button.B)){
-                drive.setTarget(new WayPoint(new Pose2d(48, 42, Rotation2d.fromDegrees(180)), 1));
+                drive.setTarget(new WayPoint(new Pose2d(48, 40, Rotation2d.fromDegrees(180)), 0.5));
             }
             if (detectorGamepad.wasJustPressed(GamepadKeys.Button.X)){
-                drive.setTarget(new WayPoint(new Pose2d(30, 12, Rotation2d.fromDegrees(180)), 1));
+                drive.setTarget(new WayPoint(new Pose2d(30, 12, Rotation2d.fromDegrees(180)), 0.5));
             }
             if (detectorGamepad.wasJustPressed(GamepadKeys.Button.Y)){
-                drive.setTarget(new WayPoint(new Pose2d(-12.5, 12, Rotation2d.fromDegrees(180)), 0.5));
+                drive.setTarget(new WayPoint(new Pose2d(-15, 12, Rotation2d.fromDegrees(180)), 0.5));
             }
             drive.updatePIDS();
             telemetry.addData("At target", drive.atTarget());

@@ -22,12 +22,12 @@ public class PIDTuner extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        drive.init(hardwareMap, telemetry);
         List<LynxModule> hubs = hardwareMap.getAll(LynxModule.class);
         hubs.forEach(hub -> hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL));
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         GamepadEx detectorGamepad=new GamepadEx(gamepad1);
         FtcDashboard dashboard= FtcDashboard.getInstance();
+        drive.init(hardwareMap, telemetry, dashboard);
         waitForStart();
         drive.setPositionEstimate(new Pose2d(0, 0, Rotation2d.fromDegrees(0)));
         while (opModeIsActive()){

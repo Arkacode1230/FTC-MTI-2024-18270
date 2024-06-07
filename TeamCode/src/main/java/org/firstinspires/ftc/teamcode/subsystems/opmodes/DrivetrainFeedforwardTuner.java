@@ -27,9 +27,10 @@ public class DrivetrainFeedforwardTuner extends OpMode {
     public void init() {
         hubs = hardwareMap.getAll(LynxModule.class);
         hubs.forEach(hub -> hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL));
-        drive.init(hardwareMap, telemetry);
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         dashboard= FtcDashboard.getInstance();
+        drive.init(hardwareMap, telemetry, dashboard);
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
     }
     @Override
     public void loop(){
