@@ -135,7 +135,7 @@ public class BlueAutoClose2plus4 extends LinearOpMode {
             }
         }
 
-        drive.setTarget(new WayPoint(new Pose2d(-11, 3.5, Rotation2d.fromDegrees(178.6)), 0.5));
+        drive.setTarget(new WayPoint(new Pose2d(-11, 3.5, Rotation2d.fromDegrees(178.6)), 0.5));//to intake from stacks
         intake.intakePosition5th(950);
         intake.setPower(1);
         while (!drive.atTarget() && opModeIsActive()){
@@ -143,9 +143,13 @@ public class BlueAutoClose2plus4 extends LinearOpMode {
             drive.updatePIDS();
             intake.update();
         }
-        intake.intakePosition4th();
+        intake.intakePosition4th();//change heights
         waitms(1000);
-        drive.setTarget(new WayPoint(new Pose2d(30, 6, Rotation2d.fromDegrees(180)), 2));
+        intake.intakePositionExtended(900);
+        waitms(500);
+        intake.setTarget(950);//back and forth
+        waitms(1000);
+        drive.setTarget(new WayPoint(new Pose2d(30, 6, Rotation2d.fromDegrees(180)), 2));//come back from stack intaking
         intake.stay(0);
         while (!drive.atTarget() && opModeIsActive()){
             drive.updateLocalizer();
@@ -154,10 +158,10 @@ public class BlueAutoClose2plus4 extends LinearOpMode {
         }
         intake.transferPosition();
         waitms(500);
-        intake.setPower(-1);
+        intake.setPower(-1);//transfer sequence
         waitms(900);
         intake.setPower(0);
-        drive.setTarget(new WayPoint(new Pose2d(51, 26, Rotation2d.fromDegrees(180)), 1));
+        drive.setTarget(new WayPoint(new Pose2d(51, 26, Rotation2d.fromDegrees(180)), 1));//to backdrop first time after intaking
         intake.stay(0);
         outtake.setPixelLatch(true);
         waitms(300);
@@ -169,11 +173,10 @@ public class BlueAutoClose2plus4 extends LinearOpMode {
             intake.update();
         }
         waitms(1000);
-        outtake.setPixelLatch(false);
+        outtake.setPixelLatch(false);//release 1st cycle
         waitms(1000);
         outtake.transferPosition();
-        waitms(1000);
-        if (randomization==PropPosition.LEFT) {
+        if (randomization==PropPosition.LEFT) {//position of intermediate point changes, so we need these if statements
             drive.setTarget(new WayPoint(new Pose2d(40, 6, Rotation2d.fromDegrees(180)), 2));
             while (!drive.atTarget() && opModeIsActive()){
                 drive.updateLocalizer();
@@ -198,7 +201,7 @@ public class BlueAutoClose2plus4 extends LinearOpMode {
             }
         }
 
-        drive.setTarget(new WayPoint(new Pose2d(-12.5, 3.5, Rotation2d.fromDegrees(178.6)), 0.5));
+        drive.setTarget(new WayPoint(new Pose2d(-12.5, 3.5, Rotation2d.fromDegrees(178.6)), 0.5));//intake from stack second time
         intake.intakePositionExtended(970);
         intake.setPower(1);
         while (!drive.atTarget() && opModeIsActive()){
@@ -207,11 +210,11 @@ public class BlueAutoClose2plus4 extends LinearOpMode {
             intake.update();
         }
         waitms(200);
-        intake.setTarget(800);
+        intake.setTarget(800);//back and forth
         waitms(400);
         intake.setTarget(970);
         waitms(900);
-        drive.setTarget(new WayPoint(new Pose2d(30, 6, Rotation2d.fromDegrees(180)), 2));
+        drive.setTarget(new WayPoint(new Pose2d(30, 6, Rotation2d.fromDegrees(180)), 2));//going back to the backdrop 2nd time
         intake.stay(0);
         while (!drive.atTarget() && opModeIsActive()){
             drive.updateLocalizer();
@@ -220,10 +223,10 @@ public class BlueAutoClose2plus4 extends LinearOpMode {
         }
         intake.transferPosition();
         waitms(500);
-        intake.setPower(-1);
+        intake.setPower(-1);//transfer sequence second time
         waitms(900);
         intake.setPower(0);
-        drive.setTarget(new WayPoint(new Pose2d(51, 26, Rotation2d.fromDegrees(180)), 1));
+        drive.setTarget(new WayPoint(new Pose2d(51, 26, Rotation2d.fromDegrees(180)), 1));//to backdrop second time
         intake.stay(0);
         outtake.setPixelLatch(true);
         waitms(300);
@@ -245,6 +248,9 @@ public class BlueAutoClose2plus4 extends LinearOpMode {
         while (opModeIsActive() && timer.milliseconds()<ms){
             intake.update();
             outtake.update();
+            drive.updateLocalizer();
+            drive.updatePIDS();
+
         }
         
     }
