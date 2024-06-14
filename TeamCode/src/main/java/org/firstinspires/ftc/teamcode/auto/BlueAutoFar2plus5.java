@@ -37,17 +37,18 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
         waitForStart();
         drive.setPositionEstimate(new Pose2d(-36.11, 62.16, Rotation2d.fromDegrees(270.00)));
         WayPoint rightPurpleWaypoint = new WayPoint(new Pose2d(-48, 40, Rotation2d.fromDegrees(270)), 1);
-        WayPoint leftYellowWaypoint = new WayPoint(new Pose2d(52, 36, Rotation2d.fromDegrees(180)), 1);
+        WayPoint leftYellowWaypoint = new WayPoint(new Pose2d(51, 36, Rotation2d.fromDegrees(180)), 1);
         WayPoint middlePurpleWaypoint = new WayPoint(new Pose2d(-40, 38, Rotation2d.fromDegrees(270)), 1);
-        WayPoint middleYellowWaypoint = new WayPoint(new Pose2d(52, 28.5, Rotation2d.fromDegrees(180)), 1);
-        WayPoint whiteStack = new WayPoint(new Pose2d(-40, 44, Rotation2d.fromDegrees(200)), 1);
+        WayPoint middleYellowWaypoint = new WayPoint(new Pose2d(50.5, 29.5, Rotation2d.fromDegrees(180)), 1);
+        WayPoint whiteStack = new WayPoint(new Pose2d(-40, 44, Rotation2d.fromDegrees(200)), 3);
         WayPoint whiteIntake = new WayPoint(new Pose2d(-46, 39, Rotation2d.fromDegrees(200)), 1);
         WayPoint leftPurpleWaypoint = new WayPoint(new Pose2d(-41, 33, Rotation2d.fromDegrees(-33)), 1);
-        WayPoint rightYellowWaypoint = new WayPoint(new Pose2d(52, 23, Rotation2d.fromDegrees(180)), 1);
-        WayPoint backdropTruss = new WayPoint(new Pose2d(-30, 51, Rotation2d.fromDegrees(180)), 1);
-        WayPoint backdropTrussDone = new WayPoint(new Pose2d(35, 51, Rotation2d.fromDegrees(180)), 1);
+        WayPoint rightYellowWaypoint = new WayPoint(new Pose2d(51.5, 23, Rotation2d.fromDegrees(180)), 1);
+        WayPoint backdropTruss = new WayPoint(new Pose2d(-30, 50.5, Rotation2d.fromDegrees(180)), 1);
+        WayPoint backdropTrussDone = new WayPoint(new Pose2d(35, 50, Rotation2d.fromDegrees(180)), 1);
+        WayPoint backdropTrussSusCode = new WayPoint(new Pose2d(-17, 50, Rotation2d.fromDegrees(180)), 1);
         WayPoint whiteIntakeShake = new WayPoint(new Pose2d(-46, 36.5, Rotation2d.fromDegrees(200)), 1);
-        WayPoint whiteIntakeShakeSec = new WayPoint(new Pose2d(-46.5, 35, Rotation2d.fromDegrees(205)), 1);
+        WayPoint whiteIntakeShakeSec = new WayPoint(new Pose2d(-47, 31, Rotation2d.fromDegrees(200)), 1);
 
 
         intake.transferPosition();
@@ -68,7 +69,7 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
                 drive.updatePIDS();
                 intake.update();
             }
-            intake.intakePosition4th();
+            intake.intakePosition5th();
             intake.setPower(1);
             drive.setTarget(whiteIntake);
             while (!drive.atTarget() && opModeIsActive()){
@@ -96,14 +97,14 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
             waitms(200);
             outtake.setPixelLatch(true);
             waitms(200);
-            outtake.depositPosition(100);
+            outtake.depositPosition(150);
             drive.setTarget(rightYellowWaypoint);
             while (!drive.atTarget() && opModeIsActive()){
                 drive.updateLocalizer();
                 drive.updatePIDS();
                 outtake.update();
             }
-            waitms(1000);
+            waitms(800);
             outtake.setPixelLatch(false);
             waitms(500);
             outtake.transferPosition();
@@ -117,22 +118,50 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
             }
             drive.setTarget(whiteStack);
             intake.stay(0);
-            //outtake.depositPosition(0);
             while (!drive.atTarget() && opModeIsActive()){
                 drive.updateLocalizer();
                 drive.updatePIDS();
                 intake.update();
             }
-            waitms(20500);
+            intake.intakePosition5th();
+            intake.setPower(1);
+            drive.setTarget(whiteIntake);
+            while (!drive.atTarget() && opModeIsActive()){
+                drive.updateLocalizer();
+                drive.updatePIDS();
+                intake.update();
+            }
+            waitms(500);
+            intake.transferPosition();
+            drive.setTarget(backdropTruss);
+            while (!drive.atTarget() && opModeIsActive()){
+                drive.updateLocalizer();
+                drive.updatePIDS();
+                intake.update();
+            }
+            intake.setPower(-1);
+            drive.setTarget(backdropTrussDone);
+            while (!drive.atTarget() && opModeIsActive()){
+                drive.updateLocalizer();
+                drive.updatePIDS();
+                intake.update();
+            }
+            intake.setPower(0);
+            intake.stay(0);
+            waitms(200);
+            outtake.setPixelLatch(true);
+            waitms(200);
+            outtake.depositPosition(150);
+            drive.setTarget(middleYellowWaypoint);
+            while (!drive.atTarget() && opModeIsActive()){
+                drive.updateLocalizer();
+                drive.updatePIDS();
+                outtake.update();
+            }
+            waitms(800);
             outtake.setPixelLatch(false);
-            waitms(1000);
+            waitms(500);
             outtake.transferPosition();
-            drive.setTarget(new WayPoint(new Pose2d(35, 6, Rotation2d.fromDegrees(180)), 2));
-            while (!drive.atTarget() && opModeIsActive()){
-                drive.updateLocalizer();
-                drive.updatePIDS();
-                intake.update();
-            }
         }
         if (randomization==PropPosition.LEFT) {
             drive.setTarget(leftPurpleWaypoint);
@@ -143,12 +172,50 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
             }
             drive.setTarget(whiteStack);
             intake.stay(0);
-            //outtake.depositPosition(0);
             while (!drive.atTarget() && opModeIsActive()){
                 drive.updateLocalizer();
                 drive.updatePIDS();
                 intake.update();
             }
+            intake.intakePosition5th();
+            intake.setPower(1);
+            drive.setTarget(whiteIntake);
+            while (!drive.atTarget() && opModeIsActive()){
+                drive.updateLocalizer();
+                drive.updatePIDS();
+                intake.update();
+            }
+            waitms(500);
+            intake.transferPosition();
+            drive.setTarget(backdropTruss);
+            while (!drive.atTarget() && opModeIsActive()){
+                drive.updateLocalizer();
+                drive.updatePIDS();
+                intake.update();
+            }
+            intake.setPower(-1);
+            drive.setTarget(backdropTrussDone);
+            while (!drive.atTarget() && opModeIsActive()){
+                drive.updateLocalizer();
+                drive.updatePIDS();
+                intake.update();
+            }
+            intake.setPower(0);
+            intake.stay(0);
+            waitms(200);
+            outtake.setPixelLatch(true);
+            waitms(200);
+            outtake.depositPosition(150);
+            drive.setTarget(leftYellowWaypoint);
+            while (!drive.atTarget() && opModeIsActive()){
+                drive.updateLocalizer();
+                drive.updatePIDS();
+                outtake.update();
+            }
+            waitms(800);
+            outtake.setPixelLatch(false);
+            waitms(500);
+            outtake.transferPosition();
         }
         drive.setTarget(backdropTrussDone);
         while (!drive.atTarget() && opModeIsActive()){
@@ -157,7 +224,9 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
             intake.update();
             outtake.update();
         }
-        drive.setTarget(backdropTruss);
+        intake.intakePosition(0);
+        intake.setPower(1);
+        drive.setTarget(backdropTrussSusCode);
         while (!drive.atTarget() && opModeIsActive()){
             drive.updateLocalizer();
             drive.updatePIDS();
@@ -169,22 +238,20 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
             drive.updatePIDS();
             intake.update();
         }
-        intake.intakePosition2nd(0);
-        intake.setPower(1);
         drive.setTarget(whiteIntake);
         while (!drive.atTarget() && opModeIsActive()){
             drive.updateLocalizer();
             drive.updatePIDS();
             intake.update();
         }
-        waitms(200);
+        waitms(400);
         drive.setTarget(whiteIntakeShake);
         while (!drive.atTarget() && opModeIsActive()){
             drive.updateLocalizer();
             drive.updatePIDS();
             intake.update();
         }
-        waitms(300);
+        waitms(400);
         intake.transferPosition();
         drive.setTarget(backdropTruss);
         while (!drive.atTarget() && opModeIsActive()){
@@ -201,10 +268,9 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
         }
         intake.setPower(0);
         intake.stay(0);
-        waitms(200);
         outtake.setPixelLatch(true);
-        waitms(200);
-        outtake.depositPosition(100);
+        waitms(100);
+        outtake.depositPosition(200);
         drive.setTarget(middleYellowWaypoint);
         while (!drive.atTarget() && opModeIsActive()){
             drive.updateLocalizer();
@@ -222,34 +288,21 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
             intake.update();
             outtake.update();
         }
-        drive.setTarget(backdropTruss);
         intake.intakePosition(0);
         intake.setPower(1);
+        drive.setTarget(backdropTrussSusCode);
         while (!drive.atTarget() && opModeIsActive()){
             drive.updateLocalizer();
             drive.updatePIDS();
             intake.update();
         }
-        drive.setTarget(whiteStack);
-        while (!drive.atTarget() && opModeIsActive()){
-            drive.updateLocalizer();
-            drive.updatePIDS();
-            intake.update();
-        }
-        drive.setTarget(whiteIntake);
-        while (!drive.atTarget() && opModeIsActive()){
-            drive.updateLocalizer();
-            drive.updatePIDS();
-            intake.update();
-        }
-        waitms(200);
         drive.setTarget(whiteIntakeShakeSec);
         while (!drive.atTarget() && opModeIsActive()){
             drive.updateLocalizer();
             drive.updatePIDS();
             intake.update();
         }
-        waitms(300);
+        waitms(500);
         intake.transferPosition();
         drive.setTarget(backdropTruss);
         while (!drive.atTarget() && opModeIsActive()){
@@ -266,19 +319,20 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
         }
         intake.setPower(0);
         intake.stay(0);
-        waitms(200);
         outtake.setPixelLatch(true);
-        waitms(200);
-        outtake.depositPosition(100);
+        waitms(100);
+        outtake.depositPosition(200);
         drive.setTarget(middleYellowWaypoint);
         while (!drive.atTarget() && opModeIsActive()){
             drive.updateLocalizer();
             drive.updatePIDS();
             outtake.update();
         }
-        waitms(3000);
+        waitms(100);
         outtake.setPixelLatch(false);
-        waitms(500);
+        waitms(400);
+        outtake.transferPosition();
+        waitms(300);
     }
     public void waitms(long ms){
         ElapsedTime timer=new ElapsedTime();
