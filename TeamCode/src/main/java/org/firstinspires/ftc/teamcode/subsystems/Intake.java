@@ -155,7 +155,7 @@ public class Intake {
     public void transferPosition(){
         this.setTarget(0);
         //set servos
-        setServos(0.25, 0.2);
+        setServos(0.22, 0.18);
     }
     public void setPower(double power){
         intakeservo1.setPower(power);
