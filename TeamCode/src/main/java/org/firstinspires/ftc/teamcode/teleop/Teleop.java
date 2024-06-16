@@ -143,7 +143,7 @@ public class Teleop extends LinearOpMode {
             }else{
                 outtake.setPixelLatch(true);
             }
-            if (gamepad1.y){
+            if (gamepad1.y && !isMoving(drive.getVelocity())){
                 hang.releaseDrone();
             }else{
                 hang.keepDrone();
@@ -176,5 +176,12 @@ public class Teleop extends LinearOpMode {
             loopTime = loop;
             telemetry.update();
         }
+    }
+    boolean isMoving(List<Double> velocities){
+        double sum=0;
+        for (Double i:velocities){
+            sum=sum+i;
+        }
+        return sum>0;
     }
 }

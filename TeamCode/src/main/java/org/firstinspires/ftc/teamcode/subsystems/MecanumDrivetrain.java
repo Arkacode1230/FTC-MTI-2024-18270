@@ -105,6 +105,7 @@ public class MecanumDrivetrain {
         localizer.updatePose();
         Pose2d position=localizer.getPose();
         telemetry.addLine(position.toString());
+        telemetry.update();
         TelemetryPacket packet = new TelemetryPacket();
 
 
