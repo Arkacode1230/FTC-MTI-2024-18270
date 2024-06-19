@@ -74,7 +74,7 @@ public class BlueAutoFarStageDoor2plus5 extends LinearOpMode {
             telemetry.addData("Theoretical max FPS", webcam.getCurrentPipelineMaxFps());
 
             telemetry.update();
-
+                 ////////////////////////////////////////////////////////////DETECTION
             if (Objects.equals(pipeline.getPosition(), "LEFT")) {
                 telemetry.addData("Position", "LEFTpo");
                 randomization=PropPosition.LEFT;
@@ -98,6 +98,7 @@ public class BlueAutoFarStageDoor2plus5 extends LinearOpMode {
 
             }
         });
+        ////////////////////////////////////////////////Defining waypoints
         waitForStart();
         drive.setPositionEstimate(new Pose2d(-36.11, 62.16, Rotation2d.fromDegrees(270.00)));
         WayPoint rightPurpleWaypoint = new WayPoint(new Pose2d(-29, 28.5, Rotation2d.fromDegrees(-163)), 1);
@@ -116,7 +117,7 @@ public class BlueAutoFarStageDoor2plus5 extends LinearOpMode {
         intake.transferPosition();
         intake.setTarget(50);
         outtake.setPixelLatch(false);
-        if (randomization==PropPosition.RIGHT) {
+        if (randomization==PropPosition.RIGHT) { ////////////////////////////RIGHT RANDOMIZATION
             drive.setTarget(rightPurpleWaypoint);
 
             while (!drive.atTarget() && opModeIsActive()){
@@ -171,7 +172,7 @@ public class BlueAutoFarStageDoor2plus5 extends LinearOpMode {
             waitms(500);
             outtake.transferPosition();
         }
-        if (randomization==PropPosition.MIDDLE) {
+        if (randomization==PropPosition.MIDDLE) { /////////////////////////////////MIDDLE RANDOMIZATION
             drive.setTarget(middlePurpleWaypoint);
             while (!drive.atTarget() && opModeIsActive()){
                 drive.updateLocalizer();
@@ -238,7 +239,7 @@ public class BlueAutoFarStageDoor2plus5 extends LinearOpMode {
             waitms(500);
             outtake.transferPosition();
         }
-        if (randomization==PropPosition.LEFT) {
+        if (randomization==PropPosition.LEFT) {//////////////////////////////LEFT RANDOMIZATION
             drive.setTarget(leftPurpleWaypoint);
             while (!drive.atTarget() && opModeIsActive()){
                 drive.updateLocalizer();
@@ -302,6 +303,7 @@ public class BlueAutoFarStageDoor2plus5 extends LinearOpMode {
 
         //////////////////////////////////////////////////////CYCLE CODE
         drive.setTarget(backdropTrussDone);
+        //back though stagedoor
         while (!drive.atTarget() && opModeIsActive()){
             drive.updateLocalizer();
             drive.updatePIDS();
@@ -310,6 +312,7 @@ public class BlueAutoFarStageDoor2plus5 extends LinearOpMode {
         }
         intake.intakePositionExtended(900);
         intake.setPower(1);
+        //Extend
         drive.setTarget(backdropTrussExtend);
         while (!drive.atTarget() && opModeIsActive()){
             drive.updateLocalizer();
@@ -317,11 +320,12 @@ public class BlueAutoFarStageDoor2plus5 extends LinearOpMode {
             intake.update();
             outtake.update();
         }
+        //Intake
         waitms(400);
         intake.setTarget(600);
         waitms(400);
         intake.setTarget(900);
-        /////////////////////////////////////ADD IN AND OUT THING
+        //IN AND OUT THING
         waitms(600);
         intake.transferPosition();
         waitms(1000);
@@ -333,12 +337,14 @@ public class BlueAutoFarStageDoor2plus5 extends LinearOpMode {
             intake.update();
             outtake.update();
         }
+        //Back to backdrop
         intake.setPower(0);
         intake.stay(0);
         outtake.setPixelLatch(true);
         waitms(100);
         outtake.depositPosition(200);
         drive.setTarget(middleYellowWaypoint);
+        //drop in middle
         while (!drive.atTarget() && opModeIsActive()){
             drive.updateLocalizer();
             drive.updatePIDS();
@@ -358,6 +364,7 @@ public class BlueAutoFarStageDoor2plus5 extends LinearOpMode {
         }
         intake.intakePositionExtended(900);
         intake.setPower(1);
+        //Extend 2nd time
         drive.setTarget(backdropTrussExtend);
         while (!drive.atTarget() && opModeIsActive()){
             drive.updateLocalizer();
@@ -369,11 +376,12 @@ public class BlueAutoFarStageDoor2plus5 extends LinearOpMode {
         intake.setTarget(600);
         waitms(400);
         intake.setTarget(900);
-        /////////////////////////////////////ADD IN AND OUT THING
+        //IN AND OUT THING
         waitms(600);
         intake.transferPosition();
         waitms(1000);
         intake.setPower(-1);
+        //BAck to backdrop
         drive.setTarget(backdropTrussDone);
         while (!drive.atTarget() && opModeIsActive()){
             drive.updateLocalizer();
@@ -398,6 +406,7 @@ public class BlueAutoFarStageDoor2plus5 extends LinearOpMode {
         waitms(400);
         outtake.transferPosition();
         waitms(300);
+        //park
         drive.setTarget(Paaark);
         while (!drive.atTarget() && opModeIsActive()){
             drive.updateLocalizer();
