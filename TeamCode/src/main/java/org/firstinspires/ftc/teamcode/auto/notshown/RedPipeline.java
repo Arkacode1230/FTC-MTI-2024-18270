@@ -14,14 +14,14 @@ public class RedPipeline extends OpenCvPipeline
     Telemetry telemetry;
 
     static final Rect LEFT_ROI = new Rect(
-            new Point(0, 100),
-            new Point(90, 150));
+            new Point(0, 110),
+            new Point(45, 170));
     static final Rect MID_ROI = new Rect(
-            new Point(110, 90),
-            new Point(200, 140));
+            new Point(140, 120),
+            new Point(190, 160));
     static final Rect RIGHT_ROI = new Rect(
-            new Point(230, 100),
-            new Point(320, 150));
+            new Point(280, 100),
+            new Point(320, 170));
     public String ObjectDirection;
     Mat mat = new Mat();
     Mat thresh = new Mat();
@@ -82,21 +82,21 @@ public class RedPipeline extends OpenCvPipeline
             Imgproc.rectangle(
                     thresh, //mat
                     LEFT_ROI,
-                    new Scalar(0, 255, 0), 4);
+                    new Scalar(255, 255, 255), 4);
         }
         else if(objRight){
             ObjectDirection = "RIGHT";
             Imgproc.rectangle(
                     thresh, //mat
                     RIGHT_ROI,
-                    new Scalar(0, 255, 0), 4);
+                    new Scalar(255, 255, 255), 4);
         }
         else if(objMid){
             ObjectDirection = "MIDDLE";
             Imgproc.rectangle(
                     thresh, //mat
                     MID_ROI,
-                    new Scalar(0, 255, 0), 4);
+                    new Scalar(255, 255, 255), 4);
         }
         else{
             ObjectDirection = "NONE";
