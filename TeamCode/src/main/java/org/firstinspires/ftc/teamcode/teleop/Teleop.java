@@ -178,10 +178,6 @@ public class Teleop extends LinearOpMode {
         }
     }
     boolean isMoving(List<Double> velocities){
-        double sum=0;
-        for (Double i:velocities){
-            sum=sum+i;
-        }
-        return sum>0;
+        return velocities.get(0)+velocities.get(1)+velocities.get(2)>0;
     }
 }
