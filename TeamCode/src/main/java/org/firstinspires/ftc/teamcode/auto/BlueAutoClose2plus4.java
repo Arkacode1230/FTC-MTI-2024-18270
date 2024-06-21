@@ -210,10 +210,11 @@ public class BlueAutoClose2plus4 extends LinearOpMode {
             }
         }
 
-        drive.setTarget(new WayPoint(new Pose2d(-11, 3.5, Rotation2d.fromDegrees(178.6)), 0.5));//to intake from stacks
+        drive.setTarget(new WayPoint(new Pose2d(-11, 3, Rotation2d.fromDegrees(178.6)), 0.5));//to intake from stacks
         intake.intakePosition5th(980);
         intake.setPower(1);
-        while (!drive.atTarget() && opModeIsActive()){
+        ElapsedTime timer=new ElapsedTime();
+        while (!drive.atTarget() && opModeIsActive() && timer.seconds()<3){
             drive.updateLocalizer();
             drive.updatePIDS();
             intake.update();
@@ -285,7 +286,8 @@ public class BlueAutoClose2plus4 extends LinearOpMode {
         drive.setTarget(new WayPoint(new Pose2d(-12.5, 3.5, Rotation2d.fromDegrees(178.6)), 0.5));//intake from stack second time
         intake.intakePositionExtended(970);
         intake.setPower(1);
-        while (!drive.atTarget() && opModeIsActive()){
+        timer=new ElapsedTime();
+        while (!drive.atTarget() && opModeIsActive() && timer.seconds()<3){
             drive.updateLocalizer();
             drive.updatePIDS();
             intake.update();
