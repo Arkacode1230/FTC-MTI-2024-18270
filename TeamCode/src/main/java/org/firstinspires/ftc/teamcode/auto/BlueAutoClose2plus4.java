@@ -8,6 +8,7 @@ import com.arcrobotics.ftclib.geometry.Rotation2d;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -26,7 +27,7 @@ import org.openftc.easyopencv.OpenCvWebcam;
 import java.util.List;
 import java.util.Objects;
 
-@Autonomous
+@Autonomous(preselectTeleOp = "Teleop")
 @Config
 public class BlueAutoClose2plus4 extends LinearOpMode {
     MecanumDrivetrain drive=new MecanumDrivetrain();
