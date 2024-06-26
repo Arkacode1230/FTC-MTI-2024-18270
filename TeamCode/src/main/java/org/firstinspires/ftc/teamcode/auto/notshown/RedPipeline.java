@@ -109,7 +109,7 @@ public class RedPipeline extends OpenCvPipeline
         }
 
 
-        //telemetry.addData("Location: ", ObjectDirection);
+        telemetry.addData("Location: ", ObjectDirection);
 
 
 

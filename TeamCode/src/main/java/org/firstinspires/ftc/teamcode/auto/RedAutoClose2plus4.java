@@ -73,6 +73,7 @@ public class RedAutoClose2plus4 extends LinearOpMode {
             telemetry.addData("Pipeline time ms", webcam.getPipelineTimeMs());
             telemetry.addData("Overhead time ms", webcam.getOverheadTimeMs());
             telemetry.addData("Theoretical max FPS", webcam.getCurrentPipelineMaxFps());
+            telemetry.addData("Outtake encoder Pos", outtake.getEncoderPos());
 
             telemetry.update();
 
@@ -101,6 +102,8 @@ public class RedAutoClose2plus4 extends LinearOpMode {
         });
 
         waitForStart();
+        outtake.resetEncoder();
+        intake.resetEncoder();
         drive.setPositionEstimate(new Pose2d(11.83, -62.16, Rotation2d.fromDegrees(90)));
         WayPoint leftPurpleWaypoint = new WayPoint(new Pose2d(24, -42, Rotation2d.fromDegrees(90)), 1);
         WayPoint leftYellowWaypoint = new WayPoint(new Pose2d(55, -36, Rotation2d.fromDegrees(180)), 1);
@@ -114,6 +117,7 @@ public class RedAutoClose2plus4 extends LinearOpMode {
         intake.transferPosition();
         intake.setTarget(50);
         outtake.setPixelLatch(true);
+        intake.setPower(0.5);
         if (randomization==PropPosition.LEFT) {
             drive.setTarget(leftPurpleWaypoint);
 
@@ -239,7 +243,7 @@ public class RedAutoClose2plus4 extends LinearOpMode {
         intake.setPower(-1);//transfer sequence
         waitms(900);
         intake.setPower(0);
-        drive.setTarget(new WayPoint(new Pose2d(51, -22, Rotation2d.fromDegrees(180)), 1));//to backdrop first time after intaking
+        drive.setTarget(new WayPoint(new Pose2d(50, -22, Rotation2d.fromDegrees(180)), 1));//to backdrop first time after intaking
         intake.stay(0);
         outtake.setPixelLatch(true);
         waitms(300);
@@ -311,7 +315,7 @@ public class RedAutoClose2plus4 extends LinearOpMode {
         intake.setPower(-1);//transfer sequence second time
         waitms(900);
         intake.setPower(0);
-        drive.setTarget(new WayPoint(new Pose2d(51, -22, Rotation2d.fromDegrees(180)), 1));//to backdrop second time
+        drive.setTarget(new WayPoint(new Pose2d(50, -22, Rotation2d.fromDegrees(180)), 1));//to backdrop second time
         intake.stay(0);
         outtake.setPixelLatch(true);
         waitms(300);

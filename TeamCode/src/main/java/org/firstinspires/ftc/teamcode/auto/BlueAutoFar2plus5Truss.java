@@ -27,7 +27,7 @@ import java.util.Objects;
 
 @Autonomous
 @Config
-public class BlueAutoFar2plus5 extends LinearOpMode {
+public class BlueAutoFar2plus5Truss extends LinearOpMode {
     MecanumDrivetrain drive=new MecanumDrivetrain();
     Intake intake=new Intake();
     Outtake outtake=new Outtake();
@@ -66,7 +66,6 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
         });
         drive.init(hardwareMap, telemetry, dashboard);
 
-        waitForStart();
         while (opModeInInit()){
             telemetry.addData("Frame Count", webcam.getFrameCount());
             telemetry.addData("FPS", String.format("%.2f", webcam.getFps()));
@@ -74,6 +73,7 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
             telemetry.addData("Pipeline time ms", webcam.getPipelineTimeMs());
             telemetry.addData("Overhead time ms", webcam.getOverheadTimeMs());
             telemetry.addData("Theoretical max FPS", webcam.getCurrentPipelineMaxFps());
+            telemetry.addData("Outtake encoder Pos", outtake.getEncoderPos());
 
             telemetry.update();
 
@@ -100,18 +100,23 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
 
             }
         });
+
+        waitForStart();
+        outtake.resetEncoder();
+        intake.resetEncoder();
+
         drive.setPositionEstimate(new Pose2d(-36.11, 62.16, Rotation2d.fromDegrees(270.00)));
         WayPoint rightPurpleWaypoint = new WayPoint(new Pose2d(-48, 40, Rotation2d.fromDegrees(270)), 1);
-        WayPoint leftYellowWaypoint = new WayPoint(new Pose2d(51, 36, Rotation2d.fromDegrees(180)), 1);
+        WayPoint leftYellowWaypoint = new WayPoint(new Pose2d(52, 36, Rotation2d.fromDegrees(180)), 1);
         WayPoint middlePurpleWaypoint = new WayPoint(new Pose2d(-40, 38, Rotation2d.fromDegrees(270)), 1);
         WayPoint middleYellowWaypoint = new WayPoint(new Pose2d(50.5, 29.5, Rotation2d.fromDegrees(180)), 1);
         WayPoint whiteStack = new WayPoint(new Pose2d(-40, 44, Rotation2d.fromDegrees(200)), 3);
         WayPoint whiteIntake = new WayPoint(new Pose2d(-46, 39, Rotation2d.fromDegrees(200)), 1);
         WayPoint leftPurpleWaypoint = new WayPoint(new Pose2d(-41, 33, Rotation2d.fromDegrees(-33)), 1);
         WayPoint rightYellowWaypoint = new WayPoint(new Pose2d(51.5, 23, Rotation2d.fromDegrees(180)), 1);
-        WayPoint backdropTruss = new WayPoint(new Pose2d(-30, 50.5, Rotation2d.fromDegrees(180)), 1);
-        WayPoint backdropTrussDone = new WayPoint(new Pose2d(35, 50, Rotation2d.fromDegrees(180)), 1);
-        WayPoint backdropTrussSusCode = new WayPoint(new Pose2d(-17, 50, Rotation2d.fromDegrees(180)), 1);
+        WayPoint backdropTruss = new WayPoint(new Pose2d(-30, 52, Rotation2d.fromDegrees(180)), 1);
+        WayPoint backdropTrussDone = new WayPoint(new Pose2d(35, 52, Rotation2d.fromDegrees(180)), 1);
+        WayPoint backdropTrussSusCode = new WayPoint(new Pose2d(-17, 52, Rotation2d.fromDegrees(180)), 1);
         WayPoint whiteIntakeShake = new WayPoint(new Pose2d(-46, 36.5, Rotation2d.fromDegrees(200)), 1);
         WayPoint whiteIntakeShakeSec = new WayPoint(new Pose2d(-47, 31, Rotation2d.fromDegrees(200)), 1);
 
@@ -119,6 +124,7 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
         intake.transferPosition();
         intake.setTarget(50);
         outtake.setPixelLatch(false);
+        intake.setPower(0.5);
         if (randomization==PropPosition.RIGHT) {
             drive.setTarget(rightPurpleWaypoint);
 
@@ -167,7 +173,7 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
             waitms(200);
             outtake.setPixelLatch(true);
             waitms(200);
-            outtake.depositPosition(150);
+            outtake.depositPosition(100);
             drive.setTarget(rightYellowWaypoint);
             while (!drive.atTarget() && opModeIsActive()){
                 drive.updateLocalizer();
@@ -227,7 +233,7 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
             waitms(200);
             outtake.setPixelLatch(true);
             waitms(200);
-            outtake.depositPosition(150);
+            outtake.depositPosition(100);
             drive.setTarget(middleYellowWaypoint);
             while (!drive.atTarget() && opModeIsActive()){
                 drive.updateLocalizer();
@@ -287,7 +293,7 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
             waitms(200);
             outtake.setPixelLatch(true);
             waitms(200);
-            outtake.depositPosition(150);
+            outtake.depositPosition(100);
             drive.setTarget(leftYellowWaypoint);
             while (!drive.atTarget() && opModeIsActive()){
                 drive.updateLocalizer();
@@ -300,6 +306,7 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
             waitms(500);
             outtake.transferPosition();
         }
+        /////////////////////////////////////////////////////////////////////////SHARED CODE
         drive.setTarget(backdropTrussDone);
         while (!drive.atTarget() && opModeIsActive()){
             drive.updateLocalizer();
@@ -330,7 +337,7 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
             intake.update();
             outtake.update();
         }
-        waitms(400);
+        waitms(600);
         drive.setTarget(whiteIntakeShake);
         while (!drive.atTarget() && opModeIsActive()){
             drive.updateLocalizer();
@@ -338,7 +345,7 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
             intake.update();
             outtake.update();
         }
-        waitms(400);
+        waitms(600);
         intake.transferPosition();
         drive.setTarget(backdropTruss);
         while (!drive.atTarget() && opModeIsActive()){
@@ -359,7 +366,7 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
         intake.stay(0);
         outtake.setPixelLatch(true);
         waitms(100);
-        outtake.depositPosition(200);
+        outtake.depositPosition(260);
         drive.setTarget(middleYellowWaypoint);
         while (!drive.atTarget() && opModeIsActive()){
             drive.updateLocalizer();
@@ -367,9 +374,9 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
             outtake.update();
             intake.update();
         }
-        waitms(200);
+        waitms(400);
         outtake.setPixelLatch(false);
-        waitms(500);
+        waitms(700);
         outtake.transferPosition();
         drive.setTarget(backdropTrussDone);
         while (!drive.atTarget() && opModeIsActive()){
@@ -423,9 +430,9 @@ public class BlueAutoFar2plus5 extends LinearOpMode {
             outtake.update();
             intake.update();
         }
-        waitms(100);
+        waitms(600);
         outtake.setPixelLatch(false);
-        waitms(400);
+        waitms(600);
         outtake.transferPosition();
         waitms(300);
     }

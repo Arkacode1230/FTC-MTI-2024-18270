@@ -26,7 +26,7 @@ public class LocalizingTest extends LinearOpMode {
         FtcDashboard dashboard= FtcDashboard.getInstance();
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         drive.init(hardwareMap, telemetry, dashboard);
-        drive.setPositionEstimate(new Pose2d(-36.11, 62.16, Rotation2d.fromDegrees(270.00)));
+        drive.setPositionEstimate(new Pose2d(-36.11, -62.16, Rotation2d.fromDegrees(90)));
         waitForStart();
         double loopTime=0;
         while (opModeIsActive()){

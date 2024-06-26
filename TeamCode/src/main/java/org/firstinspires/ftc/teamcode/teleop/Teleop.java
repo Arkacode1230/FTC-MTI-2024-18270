@@ -81,9 +81,9 @@ public class Teleop extends LinearOpMode {
         while (opModeIsActive()){
             hubs.forEach(LynxModule::clearBulkCache);
             if (gamepad1.right_bumper){
-                drive.setWeightedPowers(-gamepad1.left_stick_x*0.3, gamepad1.left_stick_y*0.3, -gamepad1.right_stick_x*0.3);
+                drive.setWeightedPowers(-gamepad1.left_stick_y*0.3, -gamepad1.left_stick_x*0.175, -gamepad1.right_stick_x*0.12);
             }else{
-                drive.setWeightedPowers(-gamepad1.left_stick_x, gamepad1.left_stick_y, -gamepad1.right_stick_x*0.7);
+                drive.setWeightedPowers(-gamepad1.left_stick_y, -gamepad1.left_stick_x,-gamepad1.right_stick_x*0.7);
             }
 
             if (gamepad2.y){
