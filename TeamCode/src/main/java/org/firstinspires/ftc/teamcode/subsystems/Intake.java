@@ -75,6 +75,9 @@ public class Intake {
             }
         }
     }
+    public void setMotorPower(double power){
+        intakemotor.set(power);
+    }
     public int getEncoderPos(){
         return intakemotor.getCurrentPosition()-startPosition;
     }
