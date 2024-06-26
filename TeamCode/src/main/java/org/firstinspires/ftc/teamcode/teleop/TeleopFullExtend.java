@@ -162,7 +162,7 @@ public class TeleopFullExtend extends LinearOpMode {
             }
 
             transferMachine.update();
-            if (gamepad2.left_bumper){
+            if (gamepad2.left_bumper && transferMachine.getState()==TransferStates.IDLE){
                 intake.setMotorPower(-gamepad2.left_stick_y);
             }
             else {
