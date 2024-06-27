@@ -25,7 +25,7 @@ import org.openftc.easyopencv.OpenCvWebcam;
 import java.util.List;
 import java.util.Objects;
 
-@Autonomous
+@Autonomous(preselectTeleOp = "Teleop")
 @Config
 public class RedAutoFar2plus5Truss extends LinearOpMode {
     MecanumDrivetrain drive=new MecanumDrivetrain();
