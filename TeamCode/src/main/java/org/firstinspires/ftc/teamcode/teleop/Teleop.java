@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.teleop;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -43,6 +45,7 @@ public class Teleop extends LinearOpMode {
         outtake.transferPosition();
         hang.retract();
         double loopTime=0.0;
+        GamepadEx driveropgamepad=new GamepadEx(gamepad2);
         StateMachine transferMachine= new StateMachineBuilder()
                 .state(TransferStates.IDLE)
                 .transition(()->gamepad2.b)
@@ -87,9 +90,12 @@ public class Teleop extends LinearOpMode {
             } else {
                 drive.setWeightedPowers(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x * 0.7);
             }
-
-            if (gamepad2.y){
-                intake.intakePositionExtended(500);
+            if (driveropgamepad.wasJustPressed(GamepadKeys.Button.LEFT_BUMPER)){
+                intake.setPower(-0.5);
+            }
+            if (driveropgamepad.wasJustReleased(GamepadKeys.Button.LEFT_BUMPER)){
+                intake.setPower(0);                                                              if (gamepad2.y){
+            }                                                                                           intake.intakePositionExtended(500);
                 intake.setPower(1);
                 transferMachine.setState(TransferStates.IDLE);
             }
