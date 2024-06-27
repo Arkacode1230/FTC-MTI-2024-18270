@@ -106,13 +106,13 @@ public class RedAutoFar2plus5Truss extends LinearOpMode {
 
         drive.setPositionEstimate(new Pose2d(-36.11, -62.16, Rotation2d.fromDegrees(90)));
         WayPoint rightPurpleWaypoint = new WayPoint(new Pose2d(-48, -40, Rotation2d.fromDegrees(90)), 1);
-        WayPoint leftYellowWaypoint = new WayPoint(new Pose2d(50.5, -33, Rotation2d.fromDegrees(180)), 1);
+        WayPoint leftYellowWaypoint = new WayPoint(new Pose2d(50, -33, Rotation2d.fromDegrees(180)), 1);
         WayPoint middlePurpleWaypoint = new WayPoint(new Pose2d(-38, -38, Rotation2d.fromDegrees(90)), 1);
-        WayPoint middleYellowWaypoint = new WayPoint(new Pose2d(50.5, -26, Rotation2d.fromDegrees(180)), 1);
-        WayPoint whiteStack = new WayPoint(new Pose2d(-40, -44, Rotation2d.fromDegrees(160)), 3);
-        WayPoint whiteIntake = new WayPoint(new Pose2d(-47, -39, Rotation2d.fromDegrees(160)), 1);
+        WayPoint middleYellowWaypoint = new WayPoint(new Pose2d(50, -26, Rotation2d.fromDegrees(180)), 1);
+        WayPoint whiteStack = new WayPoint(new Pose2d(-42, -44, Rotation2d.fromDegrees(160)), 3);
+        WayPoint whiteIntake = new WayPoint(new Pose2d(-48, -39, Rotation2d.fromDegrees(160)), 1);
         WayPoint leftPurpleWaypoint = new WayPoint(new Pose2d(-41, -33, Rotation2d.fromDegrees(33)), 1);
-        WayPoint rightYellowWaypoint = new WayPoint(new Pose2d(50.5, -19, Rotation2d.fromDegrees(180)), 1);
+        WayPoint rightYellowWaypoint = new WayPoint(new Pose2d(50, -19, Rotation2d.fromDegrees(180)), 1);
         WayPoint backdropTruss = new WayPoint(new Pose2d(-30, -50.5, Rotation2d.fromDegrees(180)), 1);
         WayPoint backdropTrussDone = new WayPoint(new Pose2d(35, -49, Rotation2d.fromDegrees(180)), 1);
         WayPoint backdropTrussSusCode = new WayPoint(new Pose2d(-17, -50, Rotation2d.fromDegrees(180)), 1);

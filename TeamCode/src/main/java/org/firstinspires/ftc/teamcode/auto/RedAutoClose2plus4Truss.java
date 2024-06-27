@@ -109,9 +109,9 @@ public class RedAutoClose2plus4Truss extends LinearOpMode {
         drive.setPositionEstimate(new Pose2d(11.83, -62.16, Rotation2d.fromDegrees(90)));
         WayPoint whiteStack = new WayPoint(new Pose2d(-40, -42, Rotation2d.fromDegrees(-210)), 3);
         WayPoint whiteIntake = new WayPoint(new Pose2d(-46, -42, Rotation2d.fromDegrees(-210)), 1);
-        WayPoint backdropTruss = new WayPoint(new Pose2d(-30, -51, Rotation2d.fromDegrees(180)), 1);
-        WayPoint backdropTrussDone = new WayPoint(new Pose2d(35, -51, Rotation2d.fromDegrees(180)), 1);
-        WayPoint backdropTrussSusCode = new WayPoint(new Pose2d(-17, -51, Rotation2d.fromDegrees(180)), 1);
+        WayPoint backdropTruss = new WayPoint(new Pose2d(-30, -52.5, Rotation2d.fromDegrees(180)), 1);
+        WayPoint backdropTrussDone = new WayPoint(new Pose2d(35, -52.5, Rotation2d.fromDegrees(180)), 1);
+        WayPoint backdropTrussSusCode = new WayPoint(new Pose2d(-17, -52.5, Rotation2d.fromDegrees(180)), 1);
         WayPoint whiteIntakeShake = new WayPoint(new Pose2d(-44, -37.5, Rotation2d.fromDegrees(-200)), 1);
         WayPoint whiteIntakeShakeSec = new WayPoint(new Pose2d(-47, -37.5, Rotation2d.fromDegrees(-210)), 1);
         WayPoint leftPurpleWaypoint = new WayPoint(new Pose2d(24, -42, Rotation2d.fromDegrees(-270)), 1);

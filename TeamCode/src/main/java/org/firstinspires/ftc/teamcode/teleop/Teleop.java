@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.hardware.lynx.LynxModule;
@@ -34,6 +35,7 @@ public class Teleop extends LinearOpMode {
         List<LynxModule> hubs = hardwareMap.getAll(LynxModule.class);
         hubs.forEach(hub -> hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL));
         drive.init(hardwareMap, telemetry, FtcDashboard.getInstance());
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         intake.init(hardwareMap);
         outtake.init(hardwareMap);
         hang.init(hardwareMap);
@@ -80,10 +82,10 @@ public class Teleop extends LinearOpMode {
         transferMachine.start();
         while (opModeIsActive()){
             hubs.forEach(LynxModule::clearBulkCache);
-            if (gamepad1.right_bumper){
-                drive.setWeightedPowers(-gamepad1.left_stick_y*0.3, -gamepad1.left_stick_x*0.175, -gamepad1.right_stick_x*0.12);
-            }else{
-                drive.setWeightedPowers(-gamepad1.left_stick_y, -gamepad1.left_stick_x,-gamepad1.right_stick_x*0.7);
+            if (gamepad1.right_bumper) {
+                drive.setWeightedPowers(-gamepad1.left_stick_y * 0.3, -gamepad1.left_stick_x * 0.175, -gamepad1.right_stick_x * 0.12);
+            } else {
+                drive.setWeightedPowers(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x * 0.7);
             }
 
             if (gamepad2.y){

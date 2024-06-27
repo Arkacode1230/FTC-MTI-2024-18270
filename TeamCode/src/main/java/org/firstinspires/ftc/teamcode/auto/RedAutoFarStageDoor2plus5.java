@@ -107,7 +107,7 @@ public class RedAutoFarStageDoor2plus5 extends LinearOpMode {
         drive.setPositionEstimate(new Pose2d(-36.11, -62.16, Rotation2d.fromDegrees(90)));
         WayPoint rightPurpleWaypoint = new WayPoint(new Pose2d(-48, -41, Rotation2d.fromDegrees(90)), 1);
         WayPoint leftYellowWaypoint = new WayPoint(new Pose2d(49.5, -33, Rotation2d.fromDegrees(180)), 1);
-        WayPoint middlePurpleWaypoint = new WayPoint(new Pose2d(-35, -37, Rotation2d.fromDegrees(90)), 1);
+        WayPoint middlePurpleWaypoint = new WayPoint(new Pose2d(-35, -38, Rotation2d.fromDegrees(90)), 1);
         WayPoint middleYellowWaypoint = new WayPoint(new Pose2d(49.5, -29, Rotation2d.fromDegrees(180)), 1);
         WayPoint whiteStack = new WayPoint(new Pose2d(-42, -35, Rotation2d.fromDegrees(180)), 2);
         WayPoint whiteIntake = new WayPoint(new Pose2d(-46.9, -5, Rotation2d.fromDegrees(180)), 1);
@@ -116,7 +116,7 @@ public class RedAutoFarStageDoor2plus5 extends LinearOpMode {
         WayPoint rightYellowWaypoint = new WayPoint(new Pose2d(49.5, -19, Rotation2d.fromDegrees(180)), 1);
         WayPoint backdropTruss = new WayPoint(new Pose2d(-30, -4, Rotation2d.fromDegrees(180)), 1);
         WayPoint backdropTrussDone = new WayPoint(new Pose2d(40, -4, Rotation2d.fromDegrees(180)), 1);
-        WayPoint backdropTrussExtend = new WayPoint(new Pose2d(-17, -4, Rotation2d.fromDegrees(180)), 1);
+        WayPoint backdropTrussExtend = new WayPoint(new Pose2d(-18.5, -4, Rotation2d.fromDegrees(180)), 1);
         WayPoint Paaark = new WayPoint(new Pose2d(52, -6, Rotation2d.fromDegrees(180)), 1);
         intake.transferPosition();
         intake.setTarget(50);
@@ -330,7 +330,7 @@ public class RedAutoFarStageDoor2plus5 extends LinearOpMode {
             intake.update();
             outtake.update();
         }
-        intake.intakePosition(940);
+        intake.intakePosition2nd(940);
         intake.setPower(1);
         //Extend
         drive.setTarget(backdropTrussExtend);
@@ -344,11 +344,11 @@ public class RedAutoFarStageDoor2plus5 extends LinearOpMode {
         waitms(400);
         intake.setTarget(600);
         waitms(400);
-        intake.setTarget(900);
+        intake.intakePositionExtended(900);
         //IN AND OUT THING
         waitms(600);
         intake.transferPosition();
-        waitms(1000);
+        waitms(1200);
         intake.setPower(-1);
         drive.setTarget(backdropTrussDone);
         while (!drive.atTarget() && opModeIsActive()){
@@ -382,7 +382,7 @@ public class RedAutoFarStageDoor2plus5 extends LinearOpMode {
             intake.update();
             outtake.update();
         }
-        intake.intakePosition(940);
+        intake.intakePositionExtended(940);
         intake.setPower(1);
         //Extend 2nd time
         drive.setTarget(backdropTrussExtend);
@@ -393,13 +393,13 @@ public class RedAutoFarStageDoor2plus5 extends LinearOpMode {
             outtake.update();
         }
         waitms(400);
-        intake.setTarget(600);
+        intake.setTarget(700);
         waitms(400);
-        intake.setTarget(900);
+        intake.setTarget(940);
         //IN AND OUT THING
         waitms(600);
         intake.transferPosition();
-        waitms(1000);
+        waitms(1300);
         intake.setPower(-1);
         //BAck to backdrop
         drive.setTarget(backdropTrussDone);
