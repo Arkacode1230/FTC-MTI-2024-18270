@@ -85,10 +85,10 @@ public class Teleop extends LinearOpMode {
         transferMachine.start();
         while (opModeIsActive()){
             hubs.forEach(LynxModule::clearBulkCache);
-            if (gamepad1.right_bumper) {
-                drive.setWeightedPowers(-gamepad1.left_stick_y * 0.3, -gamepad1.left_stick_x * 0.175, -gamepad1.right_stick_x * 0.12);
+            if (gamepad2.right_bumper) {
+                drive.setWeightedPowers(-gamepad2.left_stick_y * 0.3, -gamepad2.left_stick_x * 0.175, -gamepad2.right_stick_x * 0.12);
             } else {
-                drive.setWeightedPowers(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x * 0.7);
+                drive.setWeightedPowers(-gamepad2.left_stick_y, -gamepad2.left_stick_x, -gamepad2.right_stick_x * 0.7);
             }
             if (driveropgamepad.wasJustPressed(GamepadKeys.Button.LEFT_BUMPER)){
                 intake.setPower(-0.5);
@@ -186,6 +186,6 @@ public class Teleop extends LinearOpMode {
         }
     }
     boolean isMoving(List<Double> velocities){
-        return velocities.get(0)+velocities.get(1)+velocities.get(2)>0;
+        return Math.abs(velocities.get(0))+Math.abs(velocities.get(1))+Math.abs(velocities.get(2))>0;
     }
 }
